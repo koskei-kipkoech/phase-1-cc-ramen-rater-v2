@@ -1,5 +1,7 @@
 // index.js
 
+//import { error } from "happy-dom";
+
 // Callbacks
 const handleClick = (ramen) => {
   // Add code
@@ -16,6 +18,34 @@ const handleClick = (ramen) => {
   rarDisplay.textContent = ramen.rating;
   commentDisplay.textContent = ramen.comment;
 
+  // document.getElementById('new-rating').value = ramen.rating
+  // document.getElementById('new-comment').value = ramen.comment
+
+  // const editForm = document.getElementById('new-ramen')
+  // editForm.onsubmit = (e) =>{
+  //   e.preventDefault();
+
+  //   const updateRating = document.getElementById('new-rating').value;
+  //   const updatedComment = document.getElementById('new-comment').value;
+  //   rarDisplay.textContent = updateRating;
+  //   commentDisplay.textContent = updatedComment
+  // };
+
+
+  const deleteButton =document.getElementById('delete-button');
+  deleteButton.onclick = () => {
+    const ramenMenu = document.getElementById('ramen-menu');
+    const ramenImage = ramenMenu.querySelector(`img[alt="${ramen.name}"]`);
+    if(ramenImage){
+      ramenMenu.removeChild(ramenImage)
+    }
+
+    detImage.src = './assets/image-placeholder.jpg';
+    detName.textContent = '';
+    detRestaurant.textContent = '';
+    rarDisplay.textContent = '';
+    commentDisplay.textContent = '';
+  };
 };
 
 const addSubmitListener = () => {
@@ -46,6 +76,7 @@ const displayRamens = () => {
   fetch('http://localhost:3000/ramens')
   .then((res) => res.json())
   .then((ramens) => {
+    console.log('Fetched Ramens:', ramens)
     ramens.forEach((ramen) => {
       const ramenImg = document.createElement('img');
       ramenImg.src = ramen.image;
@@ -54,8 +85,13 @@ const displayRamens = () => {
       ramenImg.addEventListener('click', () => handleClick(ramen))
       document.getElementById('ramen-menu').appendChild(ramenImg)
     });
+    if(ramens.length > 0){
+      handleClick(ramens[0]);
+    }
   })
-  
+  .catch((error) => {
+    console.log ('Error Fetching:',error)
+  })
 };
 
 const main = () => {

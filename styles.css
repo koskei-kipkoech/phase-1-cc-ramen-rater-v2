@@ -27,6 +27,11 @@ header {
   margin: 1rem 0;
   max-width: calc(100vw - 2rem);
 }
+#delete-button{
+  margin-top: 10px;
+  background-color: black;
+  color: aqua;
+}
 
 #ramen-menu img {
   flex: 0 1 auto;
